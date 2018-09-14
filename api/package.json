@@ -1,0 +1,35 @@
+{
+  "name": "@polaris/api",
+  "version": "1.0.0",
+  "description": "Polaris API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasgmartins/polaris.git"
+  },
+  "keywords": [
+    "deployment",
+    "deploy",
+    "manager",
+    "git",
+    "circleci",
+    "orchestration"
+  ],
+  "author": "Lucas Martins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasgmartins/polaris/issues"
+  },
+  "homepage": "https://github.com/lucasgmartins/polaris#readme",
+  "dependencies": {
+    "@octokit/rest": "^15.11.2",
+    "hapi": "^17.5.4",
+    "hapi-router": "^4.0.0",
+    "lodash": "^4.17.11",
+    "nodegit": "^0.22.2",
+    "sqorn": "0.0.25"
+  }
+}
