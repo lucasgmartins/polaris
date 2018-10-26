@@ -1,5 +1,9 @@
 'use strict';
 
+//###################################
+// NODE_MODULES
+//###################################
+
 const Boom     = require('boom');
 const Octokit  = require('@octokit/rest');
 const _        = require('lodash');
@@ -7,8 +11,8 @@ const _        = require('lodash');
 const octokit = new Octokit()
 octokit.authenticate({
   type: 'oauth',
-  key: 'x',
-  secret: 'y'
+  key: '56f9f325fa0caf7a9b60',
+  secret: 'b3c976f99e974f97a766aebf2b46da6da2cc59cf',
 })
 
 
@@ -18,8 +22,13 @@ const featured =  {
   method  : 'GET',
   path    : LIST_URL,
   handler : async (request, h) => {
-    const result = await octokit.orgs.getAll();
-    return result;
+
+    try {
+
+      return 'Hello World';
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

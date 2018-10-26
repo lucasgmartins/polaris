@@ -1,0 +1,12 @@
+{
+  "server": {
+    "port": 9000,
+    "host": "localhost"
+  },
+  "auth" : {
+    "github": {
+      "client_id"      : "56f9f325fa0caf7a9b60",
+      "client_secret"  : "b3c976f99e974f97a766aebf2b46da6da2cc59cf"
+    }
+  }
+}

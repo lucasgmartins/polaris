@@ -1,18 +1,57 @@
 'use strict';
 
+//###################################
+// NODE_MODULES
+//###################################
+
 const Hapi   = require('hapi');
 const router = require('hapi-router');
+const nconf  = require('nconf');
 
-const server = Hapi.server({
-    port: 3000,
-    host: 'localhost'
-});
+//###################################
+// LOCAL MODULES
+//###################################
+
+let properties = process.env.PROPERTIES || './config/env/dev.json';
+
+nconf
+  .argv()
+  .env({separator:'__'})
+  .file(properties);
+
+
+//###################################
+// CONST
+//###################################
+
+const SERVER_CONFIGURATION = nconf.get('server');
+
+//###################################
+// LOCAL MODULES
+//###################################
+
+const Authentication = require('./config/auth');
+
+//###################################
+// INIT
+//###################################
+
+const server = Hapi.server(SERVER_CONFIGURATION);
 
 const init = async () => {
 
+  try {
+
     await loadRoutes(server);
+    await Authentication.load(server);
+
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
+
+  } catch (error) {
+    console.error(`Error ${error.stack}`);
+  }
+
 };
 
 async function loadRoutes(server) {
@@ -25,9 +64,8 @@ async function loadRoutes(server) {
   });
 }
 
-process.on('unhandledRejection', (err) => {
-    console.log(err);
-    process.exit(1);
+process.on('unhandledRejection', err => {
+  process.exit(1);
 });
 
 init();
