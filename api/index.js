@@ -42,8 +42,8 @@ const init = async () => {
 
   try {
 
-    await loadRoutes(server);
     await Authentication.load(server);
+    await loadRoutes(server);
 
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);

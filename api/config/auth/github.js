@@ -22,7 +22,6 @@ const APPLICATION_HOST     = nconf.get('server:host');
 // INIT
 //###################################
 
-
 module.exports = (server) => {
 
   server.auth.strategy('github', 'bell', {
