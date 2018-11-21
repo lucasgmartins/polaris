@@ -26,9 +26,10 @@
   "homepage": "https://github.com/lucasgmartins/polaris#readme",
   "dependencies": {
     "@octokit/rest": "^15.11.2",
-    "bell": "^9.3.1",
+    "bell": "^9.4.0",
     "hapi": "^17.5.4",
     "hapi-router": "^4.0.0",
+    "joi": "^14.1.0",
     "lodash": "^4.17.11",
     "nconf": "^0.10.0",
     "nodegit": "^0.22.2",

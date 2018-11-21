@@ -7,12 +7,16 @@
 const Boom     = require('boom');
 const Octokit  = require('@octokit/rest');
 const _        = require('lodash');
+const Joi      = require('joi');
 
 const github = {
-  method: '*',
+  method:  ['GET', 'POST'],
   path: '/auth/github',
   options: {
-    auth: 'github',
+    auth        : {
+      strategy : 'github',
+      mode     : 'try'
+    },
     handler: function (request, h) {
 
       if (!request.auth.isAuthenticated) {
@@ -30,11 +34,7 @@ const success = {
   options: {
     handler: function (request, h) {
 
-      if (!request.auth.isAuthenticated) {
-        return `Authentication failed due to: ${request.auth.error ? request.auth.error.message : 'null'}`;
-      }
-
-      return '<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>';
+      return 'Hello, ' + request.auth.credentials + '!';
     }
   }
 };
