@@ -5,9 +5,11 @@
 //###################################
 
 const Boom     = require('boom');
-const Octokit  = require('@octokit/rest');
+const octokit  = require('@octokit/rest')();
 const _        = require('lodash');
 const Joi      = require('joi');
+
+const Github = require('github-api');
 
 const github = {
   method:  ['GET', 'POST'],
@@ -17,29 +19,32 @@ const github = {
       strategy : 'github',
       mode     : 'try'
     },
-    handler: function (request, h) {
+    handler: async function (request, h) {
 
       if (!request.auth.isAuthenticated) {
         return `Authentication failed due to: ${request.auth.error.message}`;
       }
 
-      return '<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>';
+      try {
+
+        const github = new Github({ token : request.auth.credentials.token });
+        const me     = github.getUser();
+        const { data }  = await me.listOrgs();
+
+        return data;
+
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+
+      // return '<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>';
     }
   }
 };
 
-const success = {
-  method: '*',
-  path: '/auth/success',
-  options: {
-    handler: function (request, h) {
 
-      return 'Hello, ' + request.auth.credentials + '!';
-    }
-  }
-};
 
 module.exports = [
-  github,
-  success
+  github
 ]
