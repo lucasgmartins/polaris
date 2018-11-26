@@ -1,7 +1,12 @@
 type User {
   id: ID! @unique
+  email: String! @unique,
   name: String!,
   username: String!,
-  email: String!,
   photo: String
+}
+
+type Deploy {
+  id: ID! @unique,
+  name: String!
 }

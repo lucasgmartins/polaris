@@ -40,7 +40,7 @@ module.exports = (server) => {
 
 const validate = async (decoded, request, callback) => {
 
-  const user = await prisma.findOne({ email : decoded.email }).lean();
+  const user = await prisma.user({ email : decoded.email });
 
   if (user)
     return callback(null, true);

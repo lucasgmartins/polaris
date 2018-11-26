@@ -68,8 +68,6 @@ const github = {
         console.log(error);
         throw error;
       }
-
-      // return '<pre>' + JSON.stringify(request.auth.credentials, null, 4) + '</pre>';
     }
   }
 };
