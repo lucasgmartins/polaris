@@ -1,0 +1,47 @@
+'use strict';
+
+//###################################
+// NODE_MODULES
+//###################################
+
+const nconf  = require('nconf');
+const url    = require('url');
+
+//###################################
+// LOCAL MODULES
+//###################################
+
+const { prisma } = require('../../prisma/generated/prisma-client');
+
+//###################################
+// CONST
+//###################################
+
+const JWT_SECRET = nconf.get('secret');
+
+//###################################
+// INIT
+//###################################
+
+module.exports = (server) => {
+
+  server.auth.strategy('jwt', 'jwt',
+  { key           : JWT_SECRET,          // Never Share your secret key
+    validateFunc  : validate,            // validate function defined above
+    verifyOptions : { algorithms: [ 'HS256' ] }, // pick a strong algorithm
+  });
+
+  server.auth.default('jwt');
+
+  return Promise.resolve();
+}
+
+const validate = async (decoded, request, callback) => {
+
+  const user = await prisma.findOne({ email : decoded.email }).lean();
+
+  if (user)
+    return callback(null, true);
+  else
+    return callback(null, false);
+};

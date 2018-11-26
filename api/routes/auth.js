@@ -8,8 +8,24 @@ const Boom     = require('boom');
 const octokit  = require('@octokit/rest')();
 const _        = require('lodash');
 const Joi      = require('joi');
-
+const jwt      = require('jsonwebtoken');
 const Github = require('github-api');
+
+//###################################
+// LOCAL MODULES
+//###################################
+
+const { prisma } = require('../prisma/generated/prisma-client')
+
+//###################################
+// CONST
+//###################################
+
+const JWT_SECRET = nconf.get('secret');
+
+//###################################
+// API
+//###################################
 
 const github = {
   method:  ['GET', 'POST'],
@@ -29,9 +45,16 @@ const github = {
 
         const github = new Github({ token : request.auth.credentials.token });
         const me     = github.getUser();
-        const { data }  = await me.listOrgs();
 
-        return data;
+        const newUser = await prisma.createUser({
+          name: request.auth.credentials.profile.displayName,
+          nickname: request.auth.credentials.profile.nickname,
+          token: {
+            github : request.auth.credentials.token
+          }
+        });
+
+        return { jwt : jwt.sign(user, JWT_SECRET) };
 
       } catch (error) {
         console.log(error);

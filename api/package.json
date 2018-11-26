@@ -28,12 +28,16 @@
     "@octokit/rest": "^16.0.1",
     "bell": "^9.4.0",
     "github-api": "^3.0.0",
+    "graphql": "^14.0.2",
     "hapi": "^17.5.4",
+    "hapi-auth-jwt2": "^8.1.0",
     "hapi-router": "^4.0.0",
     "joi": "^14.1.0",
+    "jsonwebtoken": "^8.4.0",
     "lodash": "^4.17.11",
     "nconf": "^0.10.0",
     "nodegit": "^0.22.2",
+    "prisma-client-lib": "^1.20.7",
     "sqorn": "0.0.25"
   }
 }
