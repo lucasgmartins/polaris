@@ -8,6 +8,7 @@ const Boom     = require('boom');
 const octokit  = require('@octokit/rest')();
 const _        = require('lodash');
 const Joi      = require('joi');
+const nconf    = require('nconf');
 const jwt      = require('jsonwebtoken');
 const Github = require('github-api');
 

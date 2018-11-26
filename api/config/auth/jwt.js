@@ -5,7 +5,7 @@
 //###################################
 
 const nconf  = require('nconf');
-const url    = require('url');
+const jwt    = require('hapi-auth-jwt2');
 
 //###################################
 // LOCAL MODULES
@@ -25,9 +25,11 @@ const JWT_SECRET = nconf.get('secret');
 
 module.exports = (server) => {
 
+  server.register(jwt);
+
   server.auth.strategy('jwt', 'jwt',
   { key           : JWT_SECRET,          // Never Share your secret key
-    validateFunc  : validate,            // validate function defined above
+    validate      : validate,            // validate function defined above
     verifyOptions : { algorithms: [ 'HS256' ] }, // pick a strong algorithm
   });
 
