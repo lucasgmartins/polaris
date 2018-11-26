@@ -38,12 +38,12 @@ module.exports = (server) => {
   return Promise.resolve();
 }
 
-const validate = async (decoded, request, callback) => {
+const validate = async (decoded, request) => {
 
   const user = await prisma.user({ email : decoded.email });
 
   if (user)
-    return callback(null, true);
+    return { isValid: true };
   else
-    return callback(null, false);
+    return { isValid: false };
 };
