@@ -16,7 +16,7 @@ const GITHUB_PASSWORD      = 'cookie_encryption_password_secure';
 const GITHUB_CLIENT_ID     = nconf.get('auth:github:client_id');
 const GITHUB_CLIENT_SECRET = nconf.get('auth:github:client_secret');
 const GITHUB_SCOPE         = [
-  'repo:read',
+  'repo',
   'user'
 ];
 

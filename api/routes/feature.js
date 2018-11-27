@@ -35,11 +35,11 @@ const featured =  {
 
     try {
 
-      const github = new Github({ token : request.auth.credentials.token });
+      const github = new Github({ token : request.auth.credentials.token.github });
       const me     = github.getUser();
-      const repos  = await me.listRepos();
+      const { data }  = await me.listOrgs();
 
-      return repos;
+      return data;
     } catch (error) {
       console.log(error);
     }
