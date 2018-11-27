@@ -5,7 +5,6 @@
 //###################################
 
 const Boom     = require('boom');
-const octokit  = require('@octokit/rest')();
 const _        = require('lodash');
 const Joi      = require('joi');
 const nconf    = require('nconf');
@@ -37,10 +36,10 @@ const featured =  {
     try {
 
       const github = new Github({ token : request.auth.credentials.token });
-      github.listBranches();
-        // const me     = github.getUser();
+      const me     = github.getUser();
+      const repos  = await me.listRepos();
 
-      return 'Hello World';
+      return repos;
     } catch (error) {
       console.log(error);
     }
