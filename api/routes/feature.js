@@ -37,9 +37,16 @@ const featured =  {
 
       const github = new Github({ token : request.auth.credentials.token.github });
       const me     = github.getUser();
-      const { data }  = await me.listOrgs();
+      // const { data }  = await me.listOrgs();
+      const organization = await github.getOrganization('redspark-products');
+      const repositories = await organization.getRepos();
 
-      return data;
+      const repos = await Promise.all(repositories.data.map(repository => github.getRepo(repository.owner.login, repository.name)));
+      const branches = await Promise.all(repos.map(repository => {
+        return repository.listBranches().catch(e => e);
+      }));
+
+      return repositories.data;
     } catch (error) {
       console.log(error);
     }

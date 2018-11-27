@@ -43,25 +43,24 @@ const github = {
 
       try {
 
-        // const github = new Github({ token : request.auth.credentials.token });
-        // const me     = github.getUser();
+        let user = await prisma.user({ email : request.auth.credentials.profile.email })
 
-        const user    = {
-          name     : request.auth.credentials.profile.displayName,
-          username : request.auth.credentials.profile.username,
-          email    : request.auth.credentials.profile.email,
-          photo    : request.auth.credentials.profile.raw.avatar_url
-        };
+        if (!user) {
+          user = await prisma.createUser({
+            name     : request.auth.credentials.profile.displayName,
+            username : request.auth.credentials.profile.username,
+            email    : request.auth.credentials.profile.email,
+            photo    : request.auth.credentials.profile.raw.avatar_url
+          });
+        }
 
-        const newUser = await prisma.createUser(user);
-
-        Object.assign(newUser, {
+        Object.assign(user, {
           token: {
             github : request.auth.credentials.token
           }
         })
 
-        return { jwt : jwt.sign(newUser, JWT_SECRET) };
+        return { jwt : jwt.sign(user, JWT_SECRET) };
 
       } catch (error) {
         console.log(error);
