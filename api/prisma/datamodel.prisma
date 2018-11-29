@@ -6,6 +6,13 @@ type User {
   photo: String
 }
 
+type Repository {
+  id: ID! @unique
+  url: String!
+  healhtcheck_threshold_seconds: Number
+  healthcheck_url: String
+}
+
 type Deploy {
   id: ID! @unique,
   name: String!
