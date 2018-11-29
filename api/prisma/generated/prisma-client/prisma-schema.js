@@ -3,6 +3,10 @@ module.exports = {
   count: Int!
 }
 
+type AggregateRepository {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -120,6 +124,12 @@ type Mutation {
   upsertDeploy(where: DeployWhereUniqueInput!, create: DeployCreateInput!, update: DeployUpdateInput!): Deploy!
   deleteDeploy(where: DeployWhereUniqueInput!): Deploy
   deleteManyDeploys(where: DeployWhereInput): BatchPayload!
+  createRepository(data: RepositoryCreateInput!): Repository!
+  updateRepository(data: RepositoryUpdateInput!, where: RepositoryWhereUniqueInput!): Repository
+  updateManyRepositories(data: RepositoryUpdateManyMutationInput!, where: RepositoryWhereInput): BatchPayload!
+  upsertRepository(where: RepositoryWhereUniqueInput!, create: RepositoryCreateInput!, update: RepositoryUpdateInput!): Repository!
+  deleteRepository(where: RepositoryWhereUniqueInput!): Repository
+  deleteManyRepositories(where: RepositoryWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -149,14 +159,205 @@ type Query {
   deploy(where: DeployWhereUniqueInput!): Deploy
   deploys(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Deploy]!
   deploysConnection(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeployConnection!
+  repository(where: RepositoryWhereUniqueInput!): Repository
+  repositories(where: RepositoryWhereInput, orderBy: RepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Repository]!
+  repositoriesConnection(where: RepositoryWhereInput, orderBy: RepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RepositoryConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Repository {
+  id: ID!
+  github_id: Int!
+  github_name: String!
+  github_url: String!
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
+}
+
+type RepositoryConnection {
+  pageInfo: PageInfo!
+  edges: [RepositoryEdge]!
+  aggregate: AggregateRepository!
+}
+
+input RepositoryCreateInput {
+  github_id: Int!
+  github_name: String!
+  github_url: String!
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
+}
+
+type RepositoryEdge {
+  node: Repository!
+  cursor: String!
+}
+
+enum RepositoryOrderByInput {
+  id_ASC
+  id_DESC
+  github_id_ASC
+  github_id_DESC
+  github_name_ASC
+  github_name_DESC
+  github_url_ASC
+  github_url_DESC
+  healthcheck_threshold_seconds_ASC
+  healthcheck_threshold_seconds_DESC
+  healthcheck_url_ASC
+  healthcheck_url_DESC
+  retry_deploy_limit_ASC
+  retry_deploy_limit_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type RepositoryPreviousValues {
+  id: ID!
+  github_id: Int!
+  github_name: String!
+  github_url: String!
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
+}
+
+type RepositorySubscriptionPayload {
+  mutation: MutationType!
+  node: Repository
+  updatedFields: [String!]
+  previousValues: RepositoryPreviousValues
+}
+
+input RepositorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RepositoryWhereInput
+  AND: [RepositorySubscriptionWhereInput!]
+  OR: [RepositorySubscriptionWhereInput!]
+  NOT: [RepositorySubscriptionWhereInput!]
+}
+
+input RepositoryUpdateInput {
+  github_id: Int
+  github_name: String
+  github_url: String
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
+}
+
+input RepositoryUpdateManyMutationInput {
+  github_id: Int
+  github_name: String
+  github_url: String
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
+}
+
+input RepositoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  github_id: Int
+  github_id_not: Int
+  github_id_in: [Int!]
+  github_id_not_in: [Int!]
+  github_id_lt: Int
+  github_id_lte: Int
+  github_id_gt: Int
+  github_id_gte: Int
+  github_name: String
+  github_name_not: String
+  github_name_in: [String!]
+  github_name_not_in: [String!]
+  github_name_lt: String
+  github_name_lte: String
+  github_name_gt: String
+  github_name_gte: String
+  github_name_contains: String
+  github_name_not_contains: String
+  github_name_starts_with: String
+  github_name_not_starts_with: String
+  github_name_ends_with: String
+  github_name_not_ends_with: String
+  github_url: String
+  github_url_not: String
+  github_url_in: [String!]
+  github_url_not_in: [String!]
+  github_url_lt: String
+  github_url_lte: String
+  github_url_gt: String
+  github_url_gte: String
+  github_url_contains: String
+  github_url_not_contains: String
+  github_url_starts_with: String
+  github_url_not_starts_with: String
+  github_url_ends_with: String
+  github_url_not_ends_with: String
+  healthcheck_threshold_seconds: Int
+  healthcheck_threshold_seconds_not: Int
+  healthcheck_threshold_seconds_in: [Int!]
+  healthcheck_threshold_seconds_not_in: [Int!]
+  healthcheck_threshold_seconds_lt: Int
+  healthcheck_threshold_seconds_lte: Int
+  healthcheck_threshold_seconds_gt: Int
+  healthcheck_threshold_seconds_gte: Int
+  healthcheck_url: String
+  healthcheck_url_not: String
+  healthcheck_url_in: [String!]
+  healthcheck_url_not_in: [String!]
+  healthcheck_url_lt: String
+  healthcheck_url_lte: String
+  healthcheck_url_gt: String
+  healthcheck_url_gte: String
+  healthcheck_url_contains: String
+  healthcheck_url_not_contains: String
+  healthcheck_url_starts_with: String
+  healthcheck_url_not_starts_with: String
+  healthcheck_url_ends_with: String
+  healthcheck_url_not_ends_with: String
+  retry_deploy_limit: Int
+  retry_deploy_limit_not: Int
+  retry_deploy_limit_in: [Int!]
+  retry_deploy_limit_not_in: [Int!]
+  retry_deploy_limit_lt: Int
+  retry_deploy_limit_lte: Int
+  retry_deploy_limit_gt: Int
+  retry_deploy_limit_gte: Int
+  AND: [RepositoryWhereInput!]
+  OR: [RepositoryWhereInput!]
+  NOT: [RepositoryWhereInput!]
+}
+
+input RepositoryWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   deploy(where: DeploySubscriptionWhereInput): DeploySubscriptionPayload
+  repository(where: RepositorySubscriptionWhereInput): RepositorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

@@ -1,16 +1,25 @@
 type User {
   id: ID! @unique
-  email: String! @unique,
-  name: String!,
-  username: String!,
+  email: String! @unique
+  name: String!
+  username: String!
   photo: String
+}
+
+type Project {
+  id: ID! @unique
+  repo: @Repository
+  healthcheck_threshold_seconds: Int
+  healthcheck_url: String
+  retry_deploy_limit: Int
 }
 
 type Repository {
   id: ID! @unique
-  url: String!
-  healhtcheck_threshold_seconds: Number
-  healthcheck_url: String
+  repo_id: Int!
+  repo_name: String!
+  repo_url: String!
+  repo_type: String
 }
 
 type Deploy {
