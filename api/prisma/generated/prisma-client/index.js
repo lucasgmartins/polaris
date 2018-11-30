@@ -9,7 +9,7 @@ var models = [
     embedded: false
   },
   {
-    name: "Repository",
+    name: "Project",
     embedded: false
   },
   {

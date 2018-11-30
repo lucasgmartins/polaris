@@ -3,7 +3,7 @@ module.exports = {
   count: Int!
 }
 
-type AggregateRepository {
+type AggregateProject {
   count: Int!
 }
 
@@ -124,12 +124,12 @@ type Mutation {
   upsertDeploy(where: DeployWhereUniqueInput!, create: DeployCreateInput!, update: DeployUpdateInput!): Deploy!
   deleteDeploy(where: DeployWhereUniqueInput!): Deploy
   deleteManyDeploys(where: DeployWhereInput): BatchPayload!
-  createRepository(data: RepositoryCreateInput!): Repository!
-  updateRepository(data: RepositoryUpdateInput!, where: RepositoryWhereUniqueInput!): Repository
-  updateManyRepositories(data: RepositoryUpdateManyMutationInput!, where: RepositoryWhereInput): BatchPayload!
-  upsertRepository(where: RepositoryWhereUniqueInput!, create: RepositoryCreateInput!, update: RepositoryUpdateInput!): Repository!
-  deleteRepository(where: RepositoryWhereUniqueInput!): Repository
-  deleteManyRepositories(where: RepositoryWhereInput): BatchPayload!
+  createProject(data: ProjectCreateInput!): Project!
+  updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
+  updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
+  upsertProject(where: ProjectWhereUniqueInput!, create: ProjectCreateInput!, update: ProjectUpdateInput!): Project!
+  deleteProject(where: ProjectWhereUniqueInput!): Project
+  deleteManyProjects(where: ProjectWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -155,58 +155,45 @@ type PageInfo {
   endCursor: String
 }
 
-type Query {
-  deploy(where: DeployWhereUniqueInput!): Deploy
-  deploys(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Deploy]!
-  deploysConnection(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeployConnection!
-  repository(where: RepositoryWhereUniqueInput!): Repository
-  repositories(where: RepositoryWhereInput, orderBy: RepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Repository]!
-  repositoriesConnection(where: RepositoryWhereInput, orderBy: RepositoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RepositoryConnection!
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  node(id: ID!): Node
-}
-
-type Repository {
+type Project {
   id: ID!
-  github_id: Int!
-  github_name: String!
-  github_url: String!
+  name: String!
+  repo_id: Int!
+  repo_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-type RepositoryConnection {
+type ProjectConnection {
   pageInfo: PageInfo!
-  edges: [RepositoryEdge]!
-  aggregate: AggregateRepository!
+  edges: [ProjectEdge]!
+  aggregate: AggregateProject!
 }
 
-input RepositoryCreateInput {
-  github_id: Int!
-  github_name: String!
-  github_url: String!
+input ProjectCreateInput {
+  name: String!
+  repo_id: Int!
+  repo_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-type RepositoryEdge {
-  node: Repository!
+type ProjectEdge {
+  node: Project!
   cursor: String!
 }
 
-enum RepositoryOrderByInput {
+enum ProjectOrderByInput {
   id_ASC
   id_DESC
-  github_id_ASC
-  github_id_DESC
-  github_name_ASC
-  github_name_DESC
-  github_url_ASC
-  github_url_DESC
+  name_ASC
+  name_DESC
+  repo_id_ASC
+  repo_id_DESC
+  repo_url_ASC
+  repo_url_DESC
   healthcheck_threshold_seconds_ASC
   healthcheck_threshold_seconds_DESC
   healthcheck_url_ASC
@@ -219,53 +206,53 @@ enum RepositoryOrderByInput {
   updatedAt_DESC
 }
 
-type RepositoryPreviousValues {
+type ProjectPreviousValues {
   id: ID!
-  github_id: Int!
-  github_name: String!
-  github_url: String!
+  name: String!
+  repo_id: Int!
+  repo_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-type RepositorySubscriptionPayload {
+type ProjectSubscriptionPayload {
   mutation: MutationType!
-  node: Repository
+  node: Project
   updatedFields: [String!]
-  previousValues: RepositoryPreviousValues
+  previousValues: ProjectPreviousValues
 }
 
-input RepositorySubscriptionWhereInput {
+input ProjectSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: RepositoryWhereInput
-  AND: [RepositorySubscriptionWhereInput!]
-  OR: [RepositorySubscriptionWhereInput!]
-  NOT: [RepositorySubscriptionWhereInput!]
+  node: ProjectWhereInput
+  AND: [ProjectSubscriptionWhereInput!]
+  OR: [ProjectSubscriptionWhereInput!]
+  NOT: [ProjectSubscriptionWhereInput!]
 }
 
-input RepositoryUpdateInput {
-  github_id: Int
-  github_name: String
-  github_url: String
+input ProjectUpdateInput {
+  name: String
+  repo_id: Int
+  repo_url: String
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-input RepositoryUpdateManyMutationInput {
-  github_id: Int
-  github_name: String
-  github_url: String
+input ProjectUpdateManyMutationInput {
+  name: String
+  repo_id: Int
+  repo_url: String
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-input RepositoryWhereInput {
+input ProjectWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -280,42 +267,42 @@ input RepositoryWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  github_id: Int
-  github_id_not: Int
-  github_id_in: [Int!]
-  github_id_not_in: [Int!]
-  github_id_lt: Int
-  github_id_lte: Int
-  github_id_gt: Int
-  github_id_gte: Int
-  github_name: String
-  github_name_not: String
-  github_name_in: [String!]
-  github_name_not_in: [String!]
-  github_name_lt: String
-  github_name_lte: String
-  github_name_gt: String
-  github_name_gte: String
-  github_name_contains: String
-  github_name_not_contains: String
-  github_name_starts_with: String
-  github_name_not_starts_with: String
-  github_name_ends_with: String
-  github_name_not_ends_with: String
-  github_url: String
-  github_url_not: String
-  github_url_in: [String!]
-  github_url_not_in: [String!]
-  github_url_lt: String
-  github_url_lte: String
-  github_url_gt: String
-  github_url_gte: String
-  github_url_contains: String
-  github_url_not_contains: String
-  github_url_starts_with: String
-  github_url_not_starts_with: String
-  github_url_ends_with: String
-  github_url_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  repo_id: Int
+  repo_id_not: Int
+  repo_id_in: [Int!]
+  repo_id_not_in: [Int!]
+  repo_id_lt: Int
+  repo_id_lte: Int
+  repo_id_gt: Int
+  repo_id_gte: Int
+  repo_url: String
+  repo_url_not: String
+  repo_url_in: [String!]
+  repo_url_not_in: [String!]
+  repo_url_lt: String
+  repo_url_lte: String
+  repo_url_gt: String
+  repo_url_gte: String
+  repo_url_contains: String
+  repo_url_not_contains: String
+  repo_url_starts_with: String
+  repo_url_not_starts_with: String
+  repo_url_ends_with: String
+  repo_url_not_ends_with: String
   healthcheck_threshold_seconds: Int
   healthcheck_threshold_seconds_not: Int
   healthcheck_threshold_seconds_in: [Int!]
@@ -346,18 +333,31 @@ input RepositoryWhereInput {
   retry_deploy_limit_lte: Int
   retry_deploy_limit_gt: Int
   retry_deploy_limit_gte: Int
-  AND: [RepositoryWhereInput!]
-  OR: [RepositoryWhereInput!]
-  NOT: [RepositoryWhereInput!]
+  AND: [ProjectWhereInput!]
+  OR: [ProjectWhereInput!]
+  NOT: [ProjectWhereInput!]
 }
 
-input RepositoryWhereUniqueInput {
+input ProjectWhereUniqueInput {
   id: ID
+}
+
+type Query {
+  deploy(where: DeployWhereUniqueInput!): Deploy
+  deploys(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Deploy]!
+  deploysConnection(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeployConnection!
+  project(where: ProjectWhereUniqueInput!): Project
+  projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
+  projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
 }
 
 type Subscription {
   deploy(where: DeploySubscriptionWhereInput): DeploySubscriptionPayload
-  repository(where: RepositorySubscriptionWhereInput): RepositorySubscriptionPayload
+  project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

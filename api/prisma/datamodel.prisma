@@ -8,18 +8,12 @@ type User {
 
 type Project {
   id: ID! @unique
-  repo: @Repository
+  name: String!
+  repo_id: Int!
+  repo_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
-}
-
-type Repository {
-  id: ID! @unique
-  repo_id: Int!
-  repo_name: String!
-  repo_url: String!
-  repo_type: String
 }
 
 type Deploy {
