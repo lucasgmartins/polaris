@@ -47,13 +47,13 @@ const create =  {
 
     const _repository  = await github.getRepo(organization, repository)
     const { data }     = await _repository.getDetails();
-      
+
     return await prisma.createProject({
       name       : data.name,
       repo_id    : data.id,
       repo_url   : data.url
     });
- 
+
   }
 }
 
@@ -74,6 +74,11 @@ const update =  {
   handler : async (request, h) => {
 
     const { healthcheck_url, healthcheck_threshold_seconds } = request.payload;
+
+    const project = await prisma.project({ id:  request.params.id });
+
+    if (!project)
+      throw Boom.notFound('project');
 
     return await prisma.updateProject({
       where: { id:  request.params.id },
