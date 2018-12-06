@@ -47,6 +47,19 @@ const create =  {
     const { organization, repository } = request.payload;
 
     const _repository  = await github.getRepo(organization, repository)
+
+
+    const hook         = await _repository.createHook({
+      name    : 'web',
+      active  : true,
+      events  : ['create'],
+      config: {
+        url         : "http://polaris.io/webhook",
+        content_type: "json"
+      },
+    });
+
+
     const { data }     = await _repository.getDetails();
 
     return await prisma.createProject({

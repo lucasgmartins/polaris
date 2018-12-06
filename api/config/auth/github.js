@@ -17,7 +17,8 @@ const GITHUB_CLIENT_ID     = nconf.get('auth:github:client_id');
 const GITHUB_CLIENT_SECRET = nconf.get('auth:github:client_secret');
 const GITHUB_SCOPE         = [
   'repo',
-  'user'
+  'user',
+  "org_hook"
 ];
 
 const APPLICATION_HOST     = nconf.get('server:location');
