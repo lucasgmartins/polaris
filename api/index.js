@@ -4,13 +4,19 @@
 // NODE_MODULES
 //###################################
 
-const Hapi   = require('hapi');
-const router = require('hapi-router');
-const nconf  = require('nconf');
+const Hapi        = require('hapi');
+const router      = require('hapi-router');
+const HapiSwagger = require('hapi-swagger');
+const nconf       = require('nconf');
+const Inert       = require('inert');
+const Vision      = require('vision');
 
 //###################################
 // LOCAL MODULES
 //###################################
+
+const Pack = require('./package');
+
 
 let properties = process.env.PROPERTIES || './config/env/dev.json';
 
@@ -42,6 +48,7 @@ const init = async () => {
   try {
 
     await Authentication.load(server);
+    await loadSwagger(server);
     await loadRoutes(server);
 
     await server.start();
@@ -52,6 +59,25 @@ const init = async () => {
   }
 
 };
+
+async function loadSwagger(server) {
+
+  const swaggerOptions = {
+    info: {
+        title: 'Polaris API Documentation',
+        version: Pack.version,
+    },
+  };
+
+  return server.register([
+      Inert,
+      Vision,
+      {
+        plugin: HapiSwagger,
+        options: swaggerOptions
+      }
+  ]);
+}
 
 async function loadRoutes(server) {
 

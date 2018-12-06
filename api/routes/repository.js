@@ -32,6 +32,9 @@ const ENTITY_URL = '/repository/:id'
 const list =  {
   method  : 'GET',
   path    : `${LIST_URL}/github`,
+  options : {
+    tags    : ['api']
+  },
   handler : async (request, h) => {
 
     try {

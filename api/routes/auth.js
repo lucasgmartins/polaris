@@ -31,6 +31,7 @@ const github = {
   method:  ['GET', 'POST'],
   path: '/auth/github',
   options: {
+    tags: ['api'],
     auth        : {
       strategy : 'github',
       mode     : 'try'

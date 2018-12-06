@@ -32,6 +32,7 @@ const create =  {
   method  : 'POST',
   path    : `${LIST_URL}`,
   options : {
+    tags: ['api'],
     validate: {
       payload : {
         organization  : Joi.string().trim().required(),
