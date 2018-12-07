@@ -64,7 +64,6 @@ const github = {
         return { jwt : jwt.sign(user, JWT_SECRET) };
 
       } catch (error) {
-        console.log(error);
         throw error;
       }
     }
