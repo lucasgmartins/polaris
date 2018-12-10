@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/lucasgmartins/polaris#readme",
   "dependencies": {
+    "amqplib": "^0.5.3",
     "bell": "^9.4.0",
     "github-api": "^3.0.0",
     "graphql": "^14.0.2",

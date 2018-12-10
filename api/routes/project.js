@@ -63,10 +63,18 @@ const create =  {
 
     const { data }     = await _repository.getDetails();
 
-    return await prisma.createProject({
-      name       : data.name,
-      repo_id    : data.id,
-      repo_url   : data.url
+    return await prisma.upsertProject({
+      where: {
+        repo_id    : data.id,
+      },
+      create: {
+        name       : data.name,
+        repo_id    : data.id,
+        repo_url   : data.url
+      },
+      update: {
+        name       : data.name
+      }
     });
 
   }
