@@ -20,3 +20,11 @@ type Deploy {
   id: ID! @unique,
   name: String!
 }
+
+mutation {
+  upsertUser {
+    where : {
+      email: 
+    }
+  }
+}

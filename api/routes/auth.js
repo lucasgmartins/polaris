@@ -44,16 +44,22 @@ const github = {
 
       try {
 
-        let user = await prisma.user({ email : request.auth.credentials.profile.email })
-
-        if (!user) {
-          user = await prisma.createUser({
-            name     : request.auth.credentials.profile.displayName,
-            username : request.auth.credentials.profile.username,
-            email    : request.auth.credentials.profile.email,
-            photo    : request.auth.credentials.profile.raw.avatar_url
-          });
-        }
+        const user = await prisma.upsertUser(
+          { 
+            where: { 
+              email: request.auth.credentials.profile.email 
+            },
+            create: {
+              name     : request.auth.credentials.profile.displayName,
+              email    : request.auth.credentials.profile.email,
+              username : request.auth.credentials.profile.username,
+              email    : request.auth.credentials.profile.email,
+              photo    : request.auth.credentials.profile.raw.avatar_url
+            },
+            update: {
+              photo    : request.auth.credentials.profile.raw.avatar_url
+            }
+        });
 
         Object.assign(user, {
           token: {

@@ -51,6 +51,8 @@ const init = async () => {
     await loadSwagger(server);
     await loadRoutes(server);
 
+    server.log(['error', 'database', 'read']);
+
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);
 

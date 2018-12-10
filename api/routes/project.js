@@ -22,15 +22,8 @@ const { prisma } = require('../prisma/generated/prisma-client')
 // CONST
 //###################################
 
-const PROTOCOL = nconf.get('server:protocol') | 'http';
-const HOST     = nconf.get('server:host');
-const PORT     = nconf.get('server:port') | '';
 
-const API_URL = url.format({
-  protocol : PROTOCOL,
-  hostname : HOST + PORT ,
-  pathname : 'webhook'
-});
+const API_URL = nconf.get('api:url');
 
 //###################################
 // API
@@ -63,7 +56,7 @@ const create =  {
       active  : true,
       events  : ['create'],
       config: {
-        url         : API_URL,
+        url         : url.resolve(API_URL, '/webhook'),
         content_type: "json"
       },
     });
