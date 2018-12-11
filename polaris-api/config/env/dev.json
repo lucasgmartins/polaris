@@ -1,0 +1,15 @@
+{
+  "server": {
+    "port": 9000,
+    "host": "localhost"
+  },
+  "api" : {
+    "url" : "http://localhost:9000"
+  },
+  "auth" : {
+    "github": {
+
+    }
+  },
+  "secret" : "JWT"
+}
