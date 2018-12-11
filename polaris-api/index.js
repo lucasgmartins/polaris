@@ -17,8 +17,7 @@ const Vision      = require('vision');
 
 const Pack = require('./package');
 
-
-let properties = process.env.PROPERTIES || './config/env/dev.json';
+const properties = process.env.PROPERTIES || './config/env/dev.json';
 
 nconf
   .argv()
