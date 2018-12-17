@@ -40,5 +40,10 @@
     "nconf": "^0.10.0",
     "prisma-client-lib": "^1.20.7",
     "vision": "^5.4.3"
+  },
+  "devDependencies": {
+    "code": "^5.2.4",
+    "lab": "^18.0.0",
+    "sinon": "^7.2.2"
   }
 }

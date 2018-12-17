@@ -22,9 +22,9 @@ nconf
 // CONST
 //###################################
 
-const RABBITMQ_URL = nconf.get('rabbitmq:url');
-const WEBHOOK_BRANCH_QUEUE = 'webhook_brach';
-const WEBHOOK_PUSH_QUEUE   = 'webhook_brach';
+const RABBITMQ_URL         = nconf.get('rabbitmq:url');
+const WEBHOOK_BRANCH_QUEUE = 'webhook_branch';
+const WEBHOOK_PUSH_QUEUE   = 'webhook_branch';
 
 //###################################
 // INIT
@@ -34,16 +34,25 @@ const init = async () => {
   const connection = await amqplib.connect(RABBITMQ_URL);
   const channel    = await connection.createChannel();
 
-  await Promise.all([
+  const promises = [
     channel.assertQueue(WEBHOOK_BRANCH_QUEUE),
-    channel.assertQueue(WEBHOOK_PUSH_QUEUE)
-  ]
+    // channel.assertQueue(WEBHOOK_PUSH_QUEUE)
+  ];
+
+  await Promise.all(promises);
+
+  channel.consume(WEBHOOK_BRANCH_QUEUE, function(msg) {
+    if (msg !== null) {
+      console.log(msg.content.toString());
+      ch.ack(msg);
+    }
+  });
 };
 
 try {
 
   init();
-  
+
 } catch (error) {
-  
+  console.log(error);
 }
