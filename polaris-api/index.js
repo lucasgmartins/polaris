@@ -89,7 +89,7 @@ async function loadRoutes(server) {
   return server.register({
     plugin : router,
     options  : {
-      routes : 'routes/*.js'
+      routes : 'api/routes/*.js'
     }
   });
 }
