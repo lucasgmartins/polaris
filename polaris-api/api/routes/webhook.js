@@ -44,7 +44,7 @@ const webhook =  {
   },
   handler : async (request, h) => {
 
-    JSON.stringify(request.payload);
+    console.log(JSON.stringify(request.payload));
     return 'ok'
   }
 }

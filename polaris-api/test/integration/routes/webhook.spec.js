@@ -1,7 +1,7 @@
 'use strict'
 
 //###################################
-// NODE_MODULES
+// NODE MODULES
 //###################################
 
 const lab          = require("lab").script();
@@ -12,10 +12,11 @@ const amqplib      = require('amqplib');
 exports.lab = lab;
 
 //###################################
-// NODE_MODULES
+// LOCAL MODULES
 //###################################
 
-const server = require("../../index");
+const server        = require("../../../index");
+const newBranchStub = require('./stub/new-branch');
 
 //###################################
 // INIT
@@ -30,12 +31,8 @@ lab.experiment('webhook', () => {
     const options = {
       method	: 'POST',
       url			: `/webhook`,
-      payload : {
-        email : 'audister.studios@gmail.com'
-      }
+      payload : newBranchStub
     };
-
-    const stub = sinon.stub(amqplib, 'sendToQueue').resolves();
 
     const response   = await server.inject(options);
 
