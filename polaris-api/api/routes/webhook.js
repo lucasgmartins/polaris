@@ -10,18 +10,24 @@ const Joi      = require('joi');
 const nconf    = require('nconf');
 const jwt      = require('jsonwebtoken');
 const Github   = require('github-api');
+const amqplib  = require('amqplib');
 
 //###################################
 // LOCAL MODULES
 //###################################
 
 const { prisma } = require('../prisma/generated/prisma-client')
+const Queue      = require('../service/queue');
 
 //###################################
 // CONST
 //###################################
 
-const API_URL = nconf.get('api:url');
+const API_URL      = nconf.get('api:url');
+const BRANCH_QUEUE = nconf.get('queue:branch');
+
+
+const BranchQueue  = new Queue(BRANCH_QUEUE).connect();
 
 //###################################
 // API
@@ -35,15 +41,10 @@ const webhook =  {
   options : {
     tags: ['api'],
     auth: false
-    // validate: {
-    //   payload : {
-    //     organization  : Joi.string().trim().required(),
-    //     repository    : Joi.string().trim().required()
-    //   }
-    // }
   },
   handler : async (request, h) => {
-    console.log(request);
+
+    JSON.stringify(request.payload);
     return 'ok'
   }
 }

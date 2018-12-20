@@ -6,9 +6,10 @@
 
 const lab          = require("lab").script();
 const { expect }   = require("code");
-const mongoose     = require('mongoose');
 const sinon        = require('sinon');
 const amqplib      = require('amqplib');
+
+exports.lab = lab;
 
 //###################################
 // NODE_MODULES

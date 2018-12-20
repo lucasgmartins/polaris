@@ -17,7 +17,7 @@ const Vision      = require('vision');
 
 const Pack = require('./package');
 
-const properties = process.env.PROPERTIES || './config/env/dev.json';
+const properties = process.env.PROPERTIES || './api/config/env/test.json';
 
 nconf
   .argv()
@@ -34,7 +34,7 @@ const SERVER_CONFIGURATION = nconf.get('server');
 // LOCAL MODULES
 //###################################
 
-const Authentication = require('./config/auth');
+const Authentication = require('./api/config/auth');
 
 //###################################
 // INIT
@@ -46,11 +46,11 @@ const init = async () => {
 
   try {
 
+    server.log(['error', 'database', 'read']);
+
     await loadAuth(server);
     await loadSwagger(server);
     await loadRoutes(server);
-
-    server.log(['error', 'database', 'read']);
 
     await server.start();
     console.log(`Server running at: ${server.info.uri}`);

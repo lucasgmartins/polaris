@@ -4,7 +4,8 @@
   "description": "Polaris API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab",
+    "debug": "lab c inspect"
   },
   "repository": {
     "type": "git",
@@ -25,8 +26,8 @@
   },
   "homepage": "https://github.com/lucasgmartins/polaris#readme",
   "dependencies": {
-    "amqplib": "^0.5.3",
     "bell": "^9.4.0",
+    "bluebird": "^3.5.3",
     "github-api": "^3.0.0",
     "graphql": "^14.0.2",
     "hapi": "^17.5.4",
@@ -44,6 +45,7 @@
   "devDependencies": {
     "code": "^5.2.4",
     "lab": "^18.0.0",
+    "mocha": "^5.2.0",
     "sinon": "^7.2.2"
   }
 }
