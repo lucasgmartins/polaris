@@ -1,5 +1,5 @@
 module.exports = {
-        typeDefs: /* GraphQL */ `type AggregateDeploy {
+        typeDefs: /* GraphQL */ `type AggregateFeature {
   count: Int!
 }
 
@@ -15,69 +15,97 @@ type BatchPayload {
   count: Long!
 }
 
-type Deploy {
+type Feature {
   id: ID!
   name: String!
+  repository_id: Int!
+  repository_name: String!
+  responsible_login: String!
+  responsible_avatar: String!
 }
 
-type DeployConnection {
+type FeatureConnection {
   pageInfo: PageInfo!
-  edges: [DeployEdge]!
-  aggregate: AggregateDeploy!
+  edges: [FeatureEdge]!
+  aggregate: AggregateFeature!
 }
 
-input DeployCreateInput {
+input FeatureCreateInput {
   name: String!
+  repository_id: Int!
+  repository_name: String!
+  responsible_login: String!
+  responsible_avatar: String!
 }
 
-type DeployEdge {
-  node: Deploy!
+type FeatureEdge {
+  node: Feature!
   cursor: String!
 }
 
-enum DeployOrderByInput {
+enum FeatureOrderByInput {
   id_ASC
   id_DESC
   name_ASC
   name_DESC
+  repository_id_ASC
+  repository_id_DESC
+  repository_name_ASC
+  repository_name_DESC
+  responsible_login_ASC
+  responsible_login_DESC
+  responsible_avatar_ASC
+  responsible_avatar_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
-type DeployPreviousValues {
+type FeaturePreviousValues {
   id: ID!
   name: String!
+  repository_id: Int!
+  repository_name: String!
+  responsible_login: String!
+  responsible_avatar: String!
 }
 
-type DeploySubscriptionPayload {
+type FeatureSubscriptionPayload {
   mutation: MutationType!
-  node: Deploy
+  node: Feature
   updatedFields: [String!]
-  previousValues: DeployPreviousValues
+  previousValues: FeaturePreviousValues
 }
 
-input DeploySubscriptionWhereInput {
+input FeatureSubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: DeployWhereInput
-  AND: [DeploySubscriptionWhereInput!]
-  OR: [DeploySubscriptionWhereInput!]
-  NOT: [DeploySubscriptionWhereInput!]
+  node: FeatureWhereInput
+  AND: [FeatureSubscriptionWhereInput!]
+  OR: [FeatureSubscriptionWhereInput!]
+  NOT: [FeatureSubscriptionWhereInput!]
 }
 
-input DeployUpdateInput {
+input FeatureUpdateInput {
   name: String
+  repository_id: Int
+  repository_name: String
+  responsible_login: String
+  responsible_avatar: String
 }
 
-input DeployUpdateManyMutationInput {
+input FeatureUpdateManyMutationInput {
   name: String
+  repository_id: Int
+  repository_name: String
+  responsible_login: String
+  responsible_avatar: String
 }
 
-input DeployWhereInput {
+input FeatureWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -106,24 +134,75 @@ input DeployWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  AND: [DeployWhereInput!]
-  OR: [DeployWhereInput!]
-  NOT: [DeployWhereInput!]
+  repository_id: Int
+  repository_id_not: Int
+  repository_id_in: [Int!]
+  repository_id_not_in: [Int!]
+  repository_id_lt: Int
+  repository_id_lte: Int
+  repository_id_gt: Int
+  repository_id_gte: Int
+  repository_name: String
+  repository_name_not: String
+  repository_name_in: [String!]
+  repository_name_not_in: [String!]
+  repository_name_lt: String
+  repository_name_lte: String
+  repository_name_gt: String
+  repository_name_gte: String
+  repository_name_contains: String
+  repository_name_not_contains: String
+  repository_name_starts_with: String
+  repository_name_not_starts_with: String
+  repository_name_ends_with: String
+  repository_name_not_ends_with: String
+  responsible_login: String
+  responsible_login_not: String
+  responsible_login_in: [String!]
+  responsible_login_not_in: [String!]
+  responsible_login_lt: String
+  responsible_login_lte: String
+  responsible_login_gt: String
+  responsible_login_gte: String
+  responsible_login_contains: String
+  responsible_login_not_contains: String
+  responsible_login_starts_with: String
+  responsible_login_not_starts_with: String
+  responsible_login_ends_with: String
+  responsible_login_not_ends_with: String
+  responsible_avatar: String
+  responsible_avatar_not: String
+  responsible_avatar_in: [String!]
+  responsible_avatar_not_in: [String!]
+  responsible_avatar_lt: String
+  responsible_avatar_lte: String
+  responsible_avatar_gt: String
+  responsible_avatar_gte: String
+  responsible_avatar_contains: String
+  responsible_avatar_not_contains: String
+  responsible_avatar_starts_with: String
+  responsible_avatar_not_starts_with: String
+  responsible_avatar_ends_with: String
+  responsible_avatar_not_ends_with: String
+  AND: [FeatureWhereInput!]
+  OR: [FeatureWhereInput!]
+  NOT: [FeatureWhereInput!]
 }
 
-input DeployWhereUniqueInput {
+input FeatureWhereUniqueInput {
   id: ID
+  name: String
 }
 
 scalar Long
 
 type Mutation {
-  createDeploy(data: DeployCreateInput!): Deploy!
-  updateDeploy(data: DeployUpdateInput!, where: DeployWhereUniqueInput!): Deploy
-  updateManyDeploys(data: DeployUpdateManyMutationInput!, where: DeployWhereInput): BatchPayload!
-  upsertDeploy(where: DeployWhereUniqueInput!, create: DeployCreateInput!, update: DeployUpdateInput!): Deploy!
-  deleteDeploy(where: DeployWhereUniqueInput!): Deploy
-  deleteManyDeploys(where: DeployWhereInput): BatchPayload!
+  createFeature(data: FeatureCreateInput!): Feature!
+  updateFeature(data: FeatureUpdateInput!, where: FeatureWhereUniqueInput!): Feature
+  updateManyFeatures(data: FeatureUpdateManyMutationInput!, where: FeatureWhereInput): BatchPayload!
+  upsertFeature(where: FeatureWhereUniqueInput!, create: FeatureCreateInput!, update: FeatureUpdateInput!): Feature!
+  deleteFeature(where: FeatureWhereUniqueInput!): Feature
+  deleteManyFeatures(where: FeatureWhereInput): BatchPayload!
   createProject(data: ProjectCreateInput!): Project!
   updateProject(data: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project
   updateManyProjects(data: ProjectUpdateManyMutationInput!, where: ProjectWhereInput): BatchPayload!
@@ -158,8 +237,8 @@ type PageInfo {
 type Project {
   id: ID!
   name: String!
-  repo_id: Int!
-  repo_url: String!
+  repository_id: Int!
+  repository_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
@@ -173,8 +252,8 @@ type ProjectConnection {
 
 input ProjectCreateInput {
   name: String!
-  repo_id: Int!
-  repo_url: String!
+  repository_id: Int!
+  repository_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
@@ -190,10 +269,10 @@ enum ProjectOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  repo_id_ASC
-  repo_id_DESC
-  repo_url_ASC
-  repo_url_DESC
+  repository_id_ASC
+  repository_id_DESC
+  repository_url_ASC
+  repository_url_DESC
   healthcheck_threshold_seconds_ASC
   healthcheck_threshold_seconds_DESC
   healthcheck_url_ASC
@@ -209,8 +288,8 @@ enum ProjectOrderByInput {
 type ProjectPreviousValues {
   id: ID!
   name: String!
-  repo_id: Int!
-  repo_url: String!
+  repository_id: Int!
+  repository_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
@@ -236,8 +315,8 @@ input ProjectSubscriptionWhereInput {
 
 input ProjectUpdateInput {
   name: String
-  repo_id: Int
-  repo_url: String
+  repository_id: Int
+  repository_url: String
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
@@ -245,8 +324,8 @@ input ProjectUpdateInput {
 
 input ProjectUpdateManyMutationInput {
   name: String
-  repo_id: Int
-  repo_url: String
+  repository_id: Int
+  repository_url: String
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
@@ -281,28 +360,28 @@ input ProjectWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  repo_id: Int
-  repo_id_not: Int
-  repo_id_in: [Int!]
-  repo_id_not_in: [Int!]
-  repo_id_lt: Int
-  repo_id_lte: Int
-  repo_id_gt: Int
-  repo_id_gte: Int
-  repo_url: String
-  repo_url_not: String
-  repo_url_in: [String!]
-  repo_url_not_in: [String!]
-  repo_url_lt: String
-  repo_url_lte: String
-  repo_url_gt: String
-  repo_url_gte: String
-  repo_url_contains: String
-  repo_url_not_contains: String
-  repo_url_starts_with: String
-  repo_url_not_starts_with: String
-  repo_url_ends_with: String
-  repo_url_not_ends_with: String
+  repository_id: Int
+  repository_id_not: Int
+  repository_id_in: [Int!]
+  repository_id_not_in: [Int!]
+  repository_id_lt: Int
+  repository_id_lte: Int
+  repository_id_gt: Int
+  repository_id_gte: Int
+  repository_url: String
+  repository_url_not: String
+  repository_url_in: [String!]
+  repository_url_not_in: [String!]
+  repository_url_lt: String
+  repository_url_lte: String
+  repository_url_gt: String
+  repository_url_gte: String
+  repository_url_contains: String
+  repository_url_not_contains: String
+  repository_url_starts_with: String
+  repository_url_not_starts_with: String
+  repository_url_ends_with: String
+  repository_url_not_ends_with: String
   healthcheck_threshold_seconds: Int
   healthcheck_threshold_seconds_not: Int
   healthcheck_threshold_seconds_in: [Int!]
@@ -343,9 +422,9 @@ input ProjectWhereUniqueInput {
 }
 
 type Query {
-  deploy(where: DeployWhereUniqueInput!): Deploy
-  deploys(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Deploy]!
-  deploysConnection(where: DeployWhereInput, orderBy: DeployOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): DeployConnection!
+  feature(where: FeatureWhereUniqueInput!): Feature
+  features(where: FeatureWhereInput, orderBy: FeatureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Feature]!
+  featuresConnection(where: FeatureWhereInput, orderBy: FeatureOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FeatureConnection!
   project(where: ProjectWhereUniqueInput!): Project
   projects(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Project]!
   projectsConnection(where: ProjectWhereInput, orderBy: ProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProjectConnection!
@@ -356,7 +435,7 @@ type Query {
 }
 
 type Subscription {
-  deploy(where: DeploySubscriptionWhereInput): DeploySubscriptionPayload
+  feature(where: FeatureSubscriptionWhereInput): FeatureSubscriptionPayload
   project(where: ProjectSubscriptionWhereInput): ProjectSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }

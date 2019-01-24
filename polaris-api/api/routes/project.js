@@ -16,7 +16,7 @@ const Github   = require('github-api');
 // LOCAL MODULES
 //###################################
 
-const { prisma } = require('../prisma/generated/prisma-client')
+const { prisma } = require('../../prisma/generated/prisma-client')
 
 //###################################
 // CONST

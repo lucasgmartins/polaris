@@ -24,10 +24,10 @@ services:
       - "3306:3306"
     volumes:
       - mysql:/var/lib/mysql
-  rabbitmq:
-    image: rabbitmq
-    ports:
-      - "5672:5672"
+  # rabbitmq:
+  #   image: rabbitmq
+  #   ports:
+  #     - "5672:5672"
 
 volumes:
   mysql:

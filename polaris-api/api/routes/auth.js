@@ -15,7 +15,7 @@ const Github = require('github-api');
 // LOCAL MODULES
 //###################################
 
-const { prisma } = require('../prisma/generated/prisma-client')
+const { prisma } = require('../../prisma/generated/prisma-client');
 
 //###################################
 // CONST
@@ -45,9 +45,9 @@ const github = {
       try {
 
         const user = await prisma.upsertUser(
-          { 
-            where: { 
-              email: request.auth.credentials.profile.email 
+          {
+            where: {
+              email: request.auth.credentials.profile.email
             },
             create: {
               name     : request.auth.credentials.profile.displayName,

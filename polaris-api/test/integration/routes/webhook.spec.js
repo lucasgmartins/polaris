@@ -4,10 +4,11 @@
 // NODE MODULES
 //###################################
 
+const server        = require("../../../index");
+
 const lab          = require("lab").script();
 const { expect }   = require("code");
 const sinon        = require('sinon');
-const amqplib      = require('amqplib');
 
 exports.lab = lab;
 
@@ -15,7 +16,8 @@ exports.lab = lab;
 // LOCAL MODULES
 //###################################
 
-const server        = require("../../../index");
+const { prisma }    = require('../../../prisma/generated/prisma-client');
+
 const newBranchStub = require('./stub/new-branch');
 
 //###################################
@@ -24,19 +26,31 @@ const newBranchStub = require('./stub/new-branch');
 
 lab.experiment('webhook', () => {
 
-  // lab.beforeEach(async () => await mongoose.connection.dropDatabase());
+  // lab.beforeEach(async () => await server);
 
-  lab.test('should receive message and foward to consumer', async () => {
+  lab.test('should receive message and save as feature', async () => {
 
     const options = {
       method	: 'POST',
-      url			: `/webhook`,
+      url			: '/webhook',
       payload : newBranchStub
     };
 
-    const response   = await server.inject(options);
+    const s        = await server;
+    const response = await s.inject(options);
 
-    sinon.assert.calledOnce(stub);
+    // const newFeature = await prisma.feature();
+
+    console.log(response.result);
+
+    expect(response.statusCode).to.equal(200)
+
+    expect(response.result.id).to.exist();
+    expect(response.result.name).to.be.equal("test-branch");
+
+
+
+    // sinon.assert.calledOnce(stub);
 
   })
 

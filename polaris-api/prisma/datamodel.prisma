@@ -9,22 +9,18 @@ type User {
 type Project {
   id: ID! @unique
   name: String!
-  repo_id: Int!
-  repo_url: String!
+  repository_id: Int!
+  repository_url: String!
   healthcheck_threshold_seconds: Int
   healthcheck_url: String
   retry_deploy_limit: Int
 }
 
-type Deploy {
-  id: ID! @unique,
-  name: String!
-}
-
-mutation {
-  upsertUser {
-    where : {
-      email: 
-    }
-  }
+type Feature {
+  id: ID! @unique
+  name: String! @unique
+  repository_id: Int!
+  repository_name: String!
+  responsible_login: String!
+  responsible_avatar: String!
 }

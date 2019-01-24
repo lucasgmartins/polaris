@@ -11,7 +11,7 @@ const jwt    = require('hapi-auth-jwt2');
 // LOCAL MODULES
 //###################################
 
-const { prisma } = require('../../prisma/generated/prisma-client');
+const { prisma } = require('../../../prisma/generated/prisma-client');
 
 //###################################
 // CONST

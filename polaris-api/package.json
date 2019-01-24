@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "lab",
-    "debug": "lab c inspect"
+    "debug": "lab --inspect-brk"
   },
   "repository": {
     "type": "git",

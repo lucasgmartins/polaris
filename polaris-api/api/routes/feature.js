@@ -15,7 +15,7 @@ const Github = require('github-api');
 // LOCAL MODULES
 //###################################
 
-const { prisma } = require('../prisma/generated/prisma-client')
+const { prisma } = require('../../prisma/generated/prisma-client')
 
 //###################################
 // CONST
@@ -41,7 +41,7 @@ const featured =  {
       const organization = await github.getOrganization('redspark-products');
       const repositories = await organization.getRepos();
 
-      const repos = await Promise.all(repositories.data.map(repository => github.getRepo(repository.owner.login, repository.name)));
+      const repos    = await Promise.all(repositories.data.map(repository => github.getRepo(repository.owner.login, repository.name)));
       const branches = await Promise.all(repos.map(repository => {
         return repository.listBranches().catch(e => e);
       }));

@@ -56,7 +56,8 @@ const init = async () => {
     console.log(`Server running at: ${server.info.uri}`);
 
   } catch (error) {
-    console.error(`Error ${error.stack}`);
+
+    server.log('error', error.stack);
   }
 
 };
@@ -89,7 +90,7 @@ async function loadRoutes(server) {
   return server.register({
     plugin : router,
     options  : {
-      routes : 'routes/*.js'
+      routes : 'api/routes/*.js'
     }
   });
 }
